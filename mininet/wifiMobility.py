@@ -253,7 +253,6 @@ class mobility(object):
         :param sta: station
         :param ap: access point"""
         changeAP = False
-
         "Association Control: mechanisms that optimize the use of the APs"
         if cls.AC != '' and sta.params['associatedTo'][wlan] != ap \
                 and sta.params['associatedTo'][wlan] != '':

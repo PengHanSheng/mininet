@@ -25,7 +25,7 @@ def topology():
         max_ = random.randint(11, 30)
         cars[x] = net.addCar('car%s' % (x + 1), wlans=1,
                              ip='10.0.0.%s/8'% (x + 1), min_speed=min_,
-                             max_speed=max_, range=50)
+                             max_speed=max_, range=100)
 
     rsu11 = net.addAccessPoint('RSU11', ssid='RSU11', mode='g',
                                channel='1')
@@ -36,6 +36,8 @@ def topology():
     rsu14 = net.addAccessPoint('RSU14', ssid='RSU14', mode='g',
                                channel='11')
     c1 = net.addController('c1', controller=Controller)
+
+    h1 = net.addHost('h1', mac='00:00:00:11:00:01', ip='10.0.0.50/8')
 
     print "*** Configuring Propagation Model"
     net.propagationModel(model="logDistance", exp=4.5)
@@ -48,11 +50,16 @@ def topology():
     net.addLink(rsu11, rsu13)
     net.addLink(rsu11, rsu14)
 
+    net.addLink(h1, rsu11)
+    for x in range(0, 10):
+        net.addLink('car%s' % (x + 1), rsu11)
+ 
     net.plotGraph(max_x=500, max_y=500)
 
     net.roads(10)
 
-    net.startMobility(time=0)
+
+    net.startMobility(time=20)
 
     print "*** Starting network"
     net.build()
@@ -105,6 +112,12 @@ def topology():
     print "*** Stopping network"
     net.stop()
 
+def ITGTest(srcNo, dstNo, nodes, bw, sTime):
+    src = nodes[srcNo]
+    dst = nodes[dstNo]
+    print("Sending message from ",src.name,"<->",dst.name,"...",'\n')
+    src.cmdPrint("cd ~/D-ITG-2.8.1-r1023/bin")
+    src.cmdPrint("./ITGSend -T TCP  -a 10.0.0.50"+" -c 1000 -C "+str(bw)+" -t "+str(sTime)+" -l sender"+str(srcNo)+".log -x receiver"+str(srcNo)+"ss"+str(dstNo)+".log &")
 
 if __name__ == '__main__':
     setLogLevel('info')

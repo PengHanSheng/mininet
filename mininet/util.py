@@ -178,7 +178,7 @@ def makeIntfPair(intf1, intf2, addr1=None, addr2=None, node1=None, node2=None,
 
     # Create new pair
     netns = 1 if not node2 else node2.pid
-    
+
     cmdOutput = ''
     if addr1 is None and addr2 is None:
         cmdOutput = runCmd('ip link add name %s '
@@ -189,11 +189,11 @@ def makeIntfPair(intf1, intf2, addr1=None, addr2=None, node1=None, node2=None,
                            'address %s '
                            'type veth peer name %s '
                            'address %s '
-                           'netns %s' % 
+                           'netns %s' %
                            (intf1, addr1, intf2, addr2, netns))
 
     if cmdOutput:
-        raise Exception("Error creating interface pair (%s,%s): %s " % 
+        raise Exception("Error creating interface pair (%s,%s): %s " %
                         (intf1, intf2, cmdOutput))
 
 def retry(retries, delaySecs, fn, *args, **keywords):
@@ -258,6 +258,7 @@ def dumpNodeConnections(nodes):
             output(' %s:' % intf)
             if intf.link:
                 intfs = [ intf.link.intf1, intf.link.intf2 ]
+                print(intfs, )
                 intfs.remove(intf)
                 output(intfs[ 0 ])
             else:

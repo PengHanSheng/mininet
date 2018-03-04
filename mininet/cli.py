@@ -43,7 +43,7 @@ class CLI(Cmd):
     "Simple command-line interface to talk to nodes."
 
     prompt = 'mininet-wifi> '
-  
+
     def __init__(self, mininet, stdin=sys.stdin, script=None):
         """Start and run interactive or batch mode CLI
            mininet: Mininet network object
@@ -156,6 +156,7 @@ class CLI(Cmd):
 
     def do_net(self, _line):
         "List network connections."
+        print(self.mn.values())
         dumpNodeConnections(self.mn.values())
 
     def do_sh(self, line):
@@ -418,8 +419,8 @@ class CLI(Cmd):
 
     def default(self, line):
         """Called on an input line when the command prefix is not recognized.
-           Overridden to run shell commands when a node is the first 
-           CLI argument. Past the first CLI argument, node names are 
+           Overridden to run shell commands when a node is the first
+           CLI argument. Past the first CLI argument, node names are
            automatically replaced with corresponding IP addrs."""
 
         first, args, line = self.parseline(line)

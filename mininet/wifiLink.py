@@ -34,7 +34,7 @@ class wirelessLink (object):
     @classmethod
     def setDelay(cls, dist):
         """"Based on RandomPropagationDelayModel
-        
+
         :param dist: distance between source and destination
         """
         return eval(cls.equationDelay)
@@ -73,7 +73,7 @@ class wirelessLink (object):
     @classmethod
     def setRSSI(cls, node1=None, node2=None, wlan=0, dist=0):
         """set RSSI
-        
+
         :param node1: station
         :param node2: access point
         :param wlan: wlan ID
@@ -99,7 +99,7 @@ class wirelessLink (object):
     @classmethod
     def tc(cls, sta, wlan, bw, loss, latency, delay):
         """Applies TC
-        
+
         :param sta: station
         :param wlan: wlan ID
         :param bw: bandwidth (mbps)
@@ -114,7 +114,7 @@ class wirelessLink (object):
                 loss %.1f%% \
                 latency %.2fms " % (sta.ifb[wlan], bw, loss, latency))
         if 'encrypt' in sta.params['associatedTo'][wlan].params:
-            """tbf is applied to encrypt, cause we have noticed troubles 
+            """tbf is applied to encrypt, cause we have noticed troubles
             with wpa_supplicant and netem"""
             tc = 'tc qdisc replace dev %s root handle 1: tbf '\
                  'rate %.2fmbit '\
@@ -148,9 +148,9 @@ class Association(object):
     @classmethod
     def configureWirelessLink(cls, sta, ap, enable_wmediumd=False, wmediumd_mode=False,
                               ap_wlan=0):
-        """ 
+        """
         Updates RSSI and Others...
-        
+
         :param sta: station
         :param ap: access point
         """
@@ -206,9 +206,9 @@ class Association(object):
 
     @classmethod
     def associate_noEncrypt(cls, sta, ap, sta_wlan, ap_wlan):
-        """ 
+        """
         Association when there is no encrypt
-        
+
         :param sta: station
         :param ap: access point
         :param wlan: wlan ID
@@ -228,7 +228,7 @@ class Association(object):
     @classmethod
     def associate_infra(cls, sta, ap, wlan, ap_wlan):
         """Association when infra
-        
+
         :param sta: station
         :param ap: access point
         :param wlan: wlan ID"""
@@ -253,9 +253,9 @@ class Association(object):
 
     @classmethod
     def wpaFile(cls, sta, ap, wlan, ap_wlan):
-        """ 
+        """
         creates a wpa config file
-        
+
         :param sta: station
         :param ap: access point
         :param wlan: wlan ID
@@ -297,9 +297,9 @@ class Association(object):
 
     @classmethod
     def associate_wpa(cls, sta, ap, wlan, ap_wlan):
-        """ 
+        """
         Association when WPA
-        
+
         :param sta: station
         :param ap: access point
         :param wlan: wlan ID
@@ -320,9 +320,9 @@ class Association(object):
 
     @classmethod
     def associate_wep(cls, sta, ap, wlan, ap_wlan):
-        """ 
+        """
         Association when WEP
-        
+
         :param sta: station
         :param ap: access point
         :param wlan: wlan ID
